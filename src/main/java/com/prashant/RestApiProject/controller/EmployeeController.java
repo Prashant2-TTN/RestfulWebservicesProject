@@ -1,6 +1,7 @@
 package com.prashant.RestApiProject.controller;
 
 import com.prashant.RestApiProject.entity.Employee;
+import com.prashant.RestApiProject.exception.UserNotFoundException;
 import com.prashant.RestApiProject.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,14 @@ public class EmployeeController {
     public List<Employee> retrieveAllEmployees(){
         return employeeService.getAll();
     }
+
     @GetMapping("/employee/{id}")
     public Employee retrieveEmployee(@PathVariable int id){
-        return employeeService.get(id);
+        Employee employee=employeeService.get(id);
+        if(employee==null){
+            throw new UserNotFoundException("Not Found user with id : "+id);
+        }
+        return employee;
     }
 
     @PostMapping("/employee")

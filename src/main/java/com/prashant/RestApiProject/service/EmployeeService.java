@@ -27,7 +27,7 @@ public class EmployeeService {
 
     public Employee get(int id){
         Predicate<? super Employee> predicate =(employee)->employee.getId()==id;
-        return employeeList.stream().filter(predicate).findFirst().get();
+        return employeeList.stream().filter(predicate).findFirst().orElse(null);
     }
 
     public Employee save( @Validated Employee employee){
